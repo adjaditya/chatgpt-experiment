@@ -88,11 +88,13 @@ body {
   backdrop-filter: blur(14px);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .machine-top {
   padding: 1.25rem 1.5rem 0.75rem;
+  position: relative;
+  z-index: 3;
 }
 
 .crane-track {
@@ -100,7 +102,7 @@ body {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
   border-radius: 20px 20px 12px 12px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
@@ -117,7 +119,7 @@ body {
   align-items: center;
   transition: transform 0.8s ease-in-out;
   transform: translateX(var(--crane-x));
-  z-index: 5;
+  z-index: 30;
 }
 
 .crane-head {
@@ -236,6 +238,7 @@ body {
 
 .machine-window {
   position: relative;
+  z-index: 1;
   padding: 1.5rem 1.5rem 1rem;
   min-height: 320px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.75));
@@ -251,6 +254,11 @@ body {
   height: 240px;
   border-radius: 20px;
   overflow: hidden;
+}
+
+.crane-claw {
+  position: relative;
+  overflow: visible;
 }
 
 .reveal-platform {
@@ -779,7 +787,28 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  --ball-translate-x: 0%;
+  --ball-translate-y: 0px;
+  transform: translateX(var(--ball-translate-x)) translateY(var(--ball-translate-y));
   animation: bob 1.2s ease-in-out infinite;
+}
+
+.floating-ball.carried {
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  --ball-translate-x: -50%;
+  --ball-translate-y: 0px;
+  animation: none;
+}
+
+.floating-ball.on-platform {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  --ball-translate-x: -50%;
+  --ball-translate-y: 0px;
+  animation: drop-onto-platform 0.45s ease-out forwards, bob 1.4s ease-in-out 0.55s infinite;
 }
 
 .floating-ball::after {
@@ -795,14 +824,42 @@ body {
 }
 
 @keyframes bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  0%, 100% {
+    transform: translateX(var(--ball-translate-x)) translateY(var(--ball-translate-y));
+  }
+  50% {
+    transform: translateX(var(--ball-translate-x)) translateY(calc(var(--ball-translate-y) - 6px));
+  }
+}
+
+@keyframes drop-onto-platform {
+  0% {
+    transform: translateX(var(--ball-translate-x)) translateY(calc(var(--ball-translate-y) - 60px)) scale(0.88);
+    opacity: 0.95;
+  }
+  70% {
+    transform: translateX(var(--ball-translate-x)) translateY(calc(var(--ball-translate-y) + 10px)) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(var(--ball-translate-x)) translateY(var(--ball-translate-y)) scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes pop {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.25); opacity: 1; }
-  100% { transform: scale(0.1); opacity: 0; }
+  0% {
+    transform: translateX(var(--ball-translate-x)) translateY(var(--ball-translate-y)) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(var(--ball-translate-x)) translateY(var(--ball-translate-y)) scale(1.25);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(var(--ball-translate-x)) translateY(var(--ball-translate-y)) scale(0.1);
+    opacity: 0;
+  }
 }
 
 @media (max-width: 1000px) {
