@@ -1,3 +1,4 @@
+// -------------------- Capsule Rarity Definitions --------------------
 const rarities = {
   common: {
     key: 'common',
@@ -25,6 +26,7 @@ const rarities = {
   }
 };
 
+// -------------------- Cat Capsule Catalog --------------------
 const catPool = [
   {
     id: 'mochi',
@@ -180,109 +182,107 @@ const catPool = [
   }
 ];
 
-const state = {
+// -------------------- Global Game State --------------------
+const gameState = {
   busy: false,
   discovered: new Map()
 };
 
-const machine = document.querySelector('.machine');
-const crane = document.getElementById('crane');
-const craneClaw = document.getElementById('craneClaw');
-const ballPit = document.getElementById('ballPit');
-const revealSpot = document.getElementById('revealSpot');
+// -------------------- Cached DOM References --------------------
+const machineElement = document.querySelector('.machine');
+const craneElement = document.getElementById('crane');
+const craneClawElement = document.getElementById('craneClaw');
+const ballPitElement = document.getElementById('ballPit');
+const revealSpotElement = document.getElementById('revealSpot');
 const playButton = document.getElementById('playButton');
-const resultPanel = document.getElementById('resultPanel');
+const resultPanelElement = document.getElementById('resultPanel');
 const catCardContainer = document.getElementById('catCard');
 const closeResultButton = document.getElementById('closeResult');
-const collectionList = document.getElementById('collectionList');
+const collectionListElement = document.getElementById('collectionList');
 const catCardTemplate = document.getElementById('catCardTemplate');
 
+// -------------------- Gameplay Constants --------------------
 const CRANE_BASE_CABLE = 120;
 const CRANE_MIN_CABLE = 120;
 const CRANE_MAX_CABLE = 360;
 const BALL_TOUCH_CLEARANCE = 4;
 const PLATFORM_TOUCH_OFFSET = 26;
+const BALL_COUNT = 12;
+const RARITY_SEQUENCE = ['common', 'rare', 'epic', 'legendary'];
 
+// -------------------- Weighted Distribution Helpers --------------------
+function buildDistribution(items, weightAccessor) {
+  const distribution = [];
+  let cumulativeWeight = 0;
+  items.forEach((item) => {
+    const weight = weightAccessor(item);
+    cumulativeWeight += weight;
+    distribution.push({ item, cumulativeWeight });
+  });
+  return { distribution, totalWeight: cumulativeWeight };
+}
+
+const rarityEntries = Object.values(rarities);
+const rarityDistribution = buildDistribution(rarityEntries, (rarity) => rarity.weight);
+const catsByRarity = catPool.reduce((acc, cat) => {
+  const bucket = acc.get(cat.rarity) ?? [];
+  bucket.push(cat);
+  acc.set(cat.rarity, bucket);
+  return acc;
+}, new Map());
+const catDistributions = new Map(
+  [...catsByRarity.entries()].map(([rarityKey, cats]) => [
+    rarityKey,
+    buildDistribution(cats, (cat) => cat.weight ?? 1)
+  ])
+);
+
+// -------------------- Utility Functions --------------------
 function clampCableLength(length) {
   return Math.min(CRANE_MAX_CABLE, Math.max(CRANE_MIN_CABLE, length));
 }
 
-playButton.addEventListener('click', () => {
-  if (!state.busy) {
-    playRound();
+function selectFromDistribution({ distribution, totalWeight }) {
+  if (distribution.length === 0) {
+    return undefined;
   }
-});
-
-closeResultButton.addEventListener('click', () => {
-  hideResult();
-});
-
-resultPanel.addEventListener('click', (event) => {
-  if (event.target === resultPanel) {
-    hideResult();
-  }
-});
-
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && !resultPanel.classList.contains('hidden')) {
-    hideResult();
-  }
-});
-
-function hideResult() {
-  resultPanel.classList.add('hidden');
-  if (playButton) {
-    playButton.focus({ preventScroll: true });
-  }
+  const roll = Math.random() * totalWeight;
+  return distribution.find(({ cumulativeWeight }) => roll < cumulativeWeight)?.item ?? distribution[distribution.length - 1].item;
 }
 
-function weightedRarity() {
-  const entries = Object.values(rarities);
-  const total = entries.reduce((sum, rarity) => sum + rarity.weight, 0);
-  let roll = Math.random() * total;
-  for (const rarity of entries) {
-    roll -= rarity.weight;
-    if (roll <= 0) {
-      return rarity.key;
-    }
+function selectRarityByWeight() {
+  return selectFromDistribution(rarityDistribution).key;
+}
+
+function selectCatByWeight(rarityKey) {
+  const distribution = catDistributions.get(rarityKey);
+  if (!distribution) {
+    return undefined;
   }
-  return entries[entries.length - 1].key;
+  return selectFromDistribution(distribution);
 }
 
-function weightedCat(pool) {
-  const total = pool.reduce((sum, cat) => sum + (cat.weight ?? 1), 0);
-  let roll = Math.random() * total;
-  for (const cat of pool) {
-    roll -= (cat.weight ?? 1);
-    if (roll <= 0) {
-      return cat;
-    }
-  }
-  return pool[pool.length - 1];
+function drawCapsuleCat() {
+  const rarityKey = selectRarityByWeight();
+  return selectCatByWeight(rarityKey) ?? catPool[catPool.length - 1];
 }
 
-function drawCat() {
-  const rarityKey = weightedRarity();
-  const pool = catPool.filter((cat) => cat.rarity === rarityKey);
-  return weightedCat(pool);
-}
-
-function createBall() {
+function createBallElement() {
   const ball = document.createElement('div');
   ball.className = 'ball';
-  assignBallRarity(ball, weightedRarity());
-  randomizeBallPosition(ball);
-  ballPit.appendChild(ball);
+  applyBallRarity(ball, selectRarityByWeight());
+  randomizeBallPlacement(ball);
+  ballPitElement.appendChild(ball);
   return ball;
 }
 
-function assignBallRarity(ball, rarityKey) {
+function applyBallRarity(ball, rarityKey) {
   const rarity = rarities[rarityKey];
   ball.dataset.rarity = rarity.key;
   ball.style.setProperty('--ball-color', rarity.color);
 }
 
-function randomizeBallPosition(ball) {
+function randomizeBallPlacement(ball) {
   const left = 10 + Math.random() * 70;
   const top = 12 + Math.random() * 70;
   const scale = 0.85 + Math.random() * 0.2;
@@ -293,81 +293,74 @@ function randomizeBallPosition(ball) {
   ball.style.opacity = '';
 }
 
-function setupBalls() {
-  for (let i = 0; i < 12; i += 1) {
-    createBall();
-  }
-}
-
-function wait(ms) {
+function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function playRound() {
-  state.busy = true;
+// -------------------- Game Flow --------------------
+async function runClawRound() {
+  gameState.busy = true;
   playButton.disabled = true;
 
-  const cat = drawCat();
-  const ball = findBallForRarity(cat.rarity);
+  const cat = drawCapsuleCat();
+  const ball = locateBallForRarity(cat.rarity);
   ball.classList.add('cooldown');
 
-  const floatingBall = await animateCrane(ball);
+  const floatingBall = await animateCraneToBall(ball);
 
-  await wait(250);
+  await delay(250);
   floatingBall.classList.add('burst');
-  await wait(380);
+  await delay(380);
   floatingBall.remove();
-  revealSpot.innerHTML = '';
-  crane.style.setProperty('--cable-length', '120px');
+  revealSpotElement.innerHTML = '';
+  craneElement.style.setProperty('--cable-length', '120px');
 
-  revealCat(cat);
-  await wait(200);
+  presentCat(cat);
+  await delay(200);
 
   ball.classList.remove('cooldown');
-  assignBallRarity(ball, weightedRarity());
-  randomizeBallPosition(ball);
+  applyBallRarity(ball, selectRarityByWeight());
+  randomizeBallPlacement(ball);
 
-  crane.classList.remove('grabbing');
-  crane.classList.remove('lowering');
+  craneElement.classList.remove('grabbing');
+  craneElement.classList.remove('lowering');
 
-  state.busy = false;
+  gameState.busy = false;
   playButton.disabled = false;
 }
 
-function findBallForRarity(rarityKey) {
-  const candidates = [...ballPit.querySelectorAll('.ball')].filter(
-    (ball) => !ball.classList.contains('cooldown') && ball.dataset.rarity === rarityKey
-  );
-  if (candidates.length > 0) {
-    return candidates[Math.floor(Math.random() * candidates.length)];
+function locateBallForRarity(rarityKey) {
+  const availableBalls = [...ballPitElement.querySelectorAll('.ball:not(.cooldown)')];
+  const rarityMatches = availableBalls.filter((ball) => ball.dataset.rarity === rarityKey);
+  if (rarityMatches.length > 0) {
+    return rarityMatches[Math.floor(Math.random() * rarityMatches.length)];
   }
-  const available = [...ballPit.querySelectorAll('.ball')].filter(
-    (ball) => !ball.classList.contains('cooldown')
-  );
-  return available.length ? available[Math.floor(Math.random() * available.length)] : createBall();
+  return availableBalls.length
+    ? availableBalls[Math.floor(Math.random() * availableBalls.length)]
+    : createBallElement();
 }
 
-async function animateCrane(targetBall) {
-  const machineRect = machine.getBoundingClientRect();
+async function animateCraneToBall(targetBall) {
+  const machineRect = machineElement.getBoundingClientRect();
   const ballRect = targetBall.getBoundingClientRect();
-  const craneRect = crane.getBoundingClientRect();
-  const revealRect = revealSpot.getBoundingClientRect();
+  const craneRect = craneElement.getBoundingClientRect();
+  const revealRect = revealSpotElement.getBoundingClientRect();
 
   const targetX = ballRect.left - machineRect.left + ballRect.width / 2 - craneRect.width / 2;
-  crane.style.setProperty('--crane-x', `${targetX}px`);
-  await wait(820);
+  craneElement.style.setProperty('--crane-x', `${targetX}px`);
+  await delay(820);
 
-  crane.classList.add('lowering');
+  craneElement.classList.add('lowering');
   const updatedBallRect = targetBall.getBoundingClientRect();
-  const clawRestRect = craneClaw.getBoundingClientRect();
+  const clawRestRect = craneClawElement.getBoundingClientRect();
   const ballTouchPoint = updatedBallRect.bottom - BALL_TOUCH_CLEARANCE;
   const dropDelta = ballTouchPoint - clawRestRect.bottom;
   const dropLength = clampCableLength(CRANE_BASE_CABLE + dropDelta);
-  crane.style.setProperty('--cable-length', `${dropLength}px`);
-  await wait(520);
+  craneElement.style.setProperty('--cable-length', `${dropLength}px`);
+  await delay(520);
 
-  crane.classList.remove('lowering');
-  crane.classList.add('grabbing');
+  craneElement.classList.remove('lowering');
+  craneElement.classList.add('grabbing');
   targetBall.classList.add('taken');
 
   const floatingBall = targetBall.cloneNode(true);
@@ -375,33 +368,36 @@ async function animateCrane(targetBall) {
   const computedColor = getComputedStyle(targetBall).getPropertyValue('--ball-color').trim();
   const fallbackColor = rarities[targetBall.dataset.rarity]?.color || '#ff8ad6';
   floatingBall.style.setProperty('--ball-color', computedColor || fallbackColor);
-  craneClaw.appendChild(floatingBall);
+  craneClawElement.appendChild(floatingBall);
 
-  crane.style.setProperty('--cable-length', '120px');
-  await wait(520);
+  craneElement.style.setProperty('--cable-length', '120px');
+  await delay(520);
 
   const revealX = revealRect.left - machineRect.left + revealRect.width / 2 - craneRect.width / 2;
-  crane.style.setProperty('--crane-x', `${revealX}px`);
-  await wait(720);
+  craneElement.style.setProperty('--crane-x', `${revealX}px`);
+  await delay(720);
 
-  crane.classList.add('lowering');
-  const clawRestAtReveal = craneClaw.getBoundingClientRect();
+  craneElement.classList.add('lowering');
+  const clawRestAtReveal = craneClawElement.getBoundingClientRect();
   const platformTarget = revealRect.top + PLATFORM_TOUCH_OFFSET;
-  const revealDrop = clampCableLength(CRANE_BASE_CABLE + (platformTarget - clawRestAtReveal.bottom));
-  crane.style.setProperty('--cable-length', `${revealDrop}px`);
-  await wait(420);
-  crane.classList.remove('lowering');
+  const revealDrop = clampCableLength(
+    CRANE_BASE_CABLE + (platformTarget - clawRestAtReveal.bottom)
+  );
+  craneElement.style.setProperty('--cable-length', `${revealDrop}px`);
+  await delay(420);
+  craneElement.classList.remove('lowering');
 
-  await wait(160);
+  await delay(160);
   floatingBall.classList.remove('carried');
   floatingBall.classList.add('on-platform');
-  revealSpot.innerHTML = '';
-  revealSpot.appendChild(floatingBall);
+  revealSpotElement.innerHTML = '';
+  revealSpotElement.appendChild(floatingBall);
 
   return floatingBall;
 }
 
-function showCatDetails(cat) {
+// -------------------- UI Rendering --------------------
+function renderCatDetails(cat) {
   const rarity = rarities[cat.rarity];
   const cardFragment = catCardTemplate.content.cloneNode(true);
   const cardInner = cardFragment.querySelector('.cat-card-inner');
@@ -436,39 +432,39 @@ function showCatDetails(cat) {
   catCardContainer.innerHTML = '';
   catCardContainer.appendChild(cardFragment);
 
-  resultPanel.classList.remove('hidden');
+  resultPanelElement.classList.remove('hidden');
   if (closeResultButton) {
     closeResultButton.focus({ preventScroll: true });
   }
 }
 
-function revealCat(cat) {
-  showCatDetails(cat);
-  updateCollection(cat);
-  updateCollectionList();
+function presentCat(cat) {
+  renderCatDetails(cat);
+  recordCatDiscovery(cat);
+  renderCollectionList();
 }
 
-function updateCollection(cat) {
-  const current = state.discovered.get(cat.id) ?? { cat, count: 0 };
+function recordCatDiscovery(cat) {
+  const current = gameState.discovered.get(cat.id) ?? { cat, count: 0 };
   current.count += 1;
-  state.discovered.set(cat.id, current);
+  gameState.discovered.set(cat.id, current);
 }
 
-function updateCollectionList() {
-  collectionList.innerHTML = '';
-  if (state.discovered.size === 0) {
+function renderCollectionList() {
+  collectionListElement.innerHTML = '';
+  if (gameState.discovered.size === 0) {
     const empty = document.createElement('li');
     empty.className = 'empty';
     empty.textContent = 'No capsules opened yet. Give the claw a try!';
-    collectionList.appendChild(empty);
+    collectionListElement.appendChild(empty);
     return;
   }
 
-  const sorted = [...state.discovered.values()].sort((a, b) => {
+  const sorted = [...gameState.discovered.values()].sort((a, b) => {
     if (a.cat.rarity === b.cat.rarity) {
       return a.cat.name.localeCompare(b.cat.name);
     }
-    return rarityOrder(a.cat.rarity) - rarityOrder(b.cat.rarity);
+    return getRarityOrder(a.cat.rarity) - getRarityOrder(b.cat.rarity);
   });
 
   sorted.forEach(({ cat, count }) => {
@@ -478,7 +474,7 @@ function updateCollectionList() {
     nameButton.className = 'cat-name';
     nameButton.textContent = `${cat.name}`;
     nameButton.addEventListener('click', () => {
-      showCatDetails(cat);
+      renderCatDetails(cat);
     });
 
     const badge = document.createElement('span');
@@ -486,21 +482,59 @@ function updateCollectionList() {
     badge.textContent = `${rarities[cat.rarity].label} ×${count}`;
 
     item.append(nameButton, badge);
-    collectionList.appendChild(item);
+    collectionListElement.appendChild(item);
   });
 }
 
-function rarityOrder(key) {
-  return ['common', 'rare', 'epic', 'legendary'].indexOf(key);
+function getRarityOrder(key) {
+  return RARITY_SEQUENCE.indexOf(key);
 }
 
-function init() {
-  setupBalls();
-  updateCollectionList();
+function hideResultPanel() {
+  resultPanelElement.classList.add('hidden');
+  if (playButton) {
+    playButton.focus({ preventScroll: true });
+  }
 }
 
-init();
+// -------------------- Initialization --------------------
+function initializeBallPit() {
+  for (let i = 0; i < BALL_COUNT; i += 1) {
+    createBallElement();
+  }
+}
 
+function initializeGame() {
+  initializeBallPit();
+  renderCollectionList();
+}
+
+initializeGame();
+
+// -------------------- Event Wiring --------------------
+playButton.addEventListener('click', () => {
+  if (!gameState.busy) {
+    runClawRound();
+  }
+});
+
+closeResultButton.addEventListener('click', () => {
+  hideResultPanel();
+});
+
+resultPanelElement.addEventListener('click', (event) => {
+  if (event.target === resultPanelElement) {
+    hideResultPanel();
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !resultPanelElement.classList.contains('hidden')) {
+    hideResultPanel();
+  }
+});
+
+// -------------------- Service Worker Registration --------------------
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch((err) => {
