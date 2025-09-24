@@ -3,7 +3,7 @@ const rarities = {
   common: {
     key: 'common',
     label: 'Common',
-    weight: 60,
+    weight: 59,
     color: '#77d1f7'
   },
   rare: {
@@ -23,6 +23,12 @@ const rarities = {
     label: 'Legendary',
     weight: 3,
     color: '#f6c350'
+  },
+  deity: {
+    key: 'deity',
+    label: 'Deity',
+    weight: 1,
+    color: '#f3c8ff'
   }
 };
 
@@ -179,6 +185,25 @@ const catPool = [
       patternColor: 'linear-gradient(135deg, rgba(255,221,148,0.55), rgba(246,195,80,0.7))',
       patternOpacity: 0.34
     }
+  },
+  {
+    id: 'aurora-muse',
+    name: 'Aurora Muse',
+    rarity: 'deity',
+    weight: 1,
+    description: 'A cosmic storyteller whose tail paints shimmering auroras across the arcade ceiling.',
+    traits: {
+      'Favorite Treat': 'Sunrise sorbet',
+      Mood: 'Transcendent'
+    },
+    colors: {
+      base: '#fef2ff',
+      secondary: '#f6c8ff',
+      innerEar: '#ffe4ff',
+      accent: '#ffffff',
+      patternColor: 'linear-gradient(140deg, rgba(255,200,237,0.6), rgba(160,220,255,0.6), rgba(255,246,189,0.65))',
+      patternOpacity: 0.4
+    }
   }
 ];
 
@@ -208,7 +233,7 @@ const CRANE_MAX_CABLE = 360;
 const BALL_TOUCH_CLEARANCE = 4;
 const PLATFORM_TOUCH_OFFSET = 26;
 const BALL_COUNT = 12;
-const RARITY_SEQUENCE = ['common', 'rare', 'epic', 'legendary'];
+const RARITY_SEQUENCE = ['common', 'rare', 'epic', 'legendary', 'deity'];
 
 // -------------------- Weighted Distribution Helpers --------------------
 function buildDistribution(items, weightAccessor) {
