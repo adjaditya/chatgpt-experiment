@@ -360,7 +360,7 @@ async function animateCrane(targetBall) {
   targetBall.classList.add('taken');
 
   const floatingBall = targetBall.cloneNode(true);
-  floatingBall.classList.add('floating-ball');
+  floatingBall.classList.add('floating-ball', 'carried');
   const computedColor = getComputedStyle(targetBall).getPropertyValue('--ball-color').trim();
   const fallbackColor = rarities[targetBall.dataset.rarity]?.color || '#ff8ad6';
   floatingBall.style.setProperty('--ball-color', computedColor || fallbackColor);
@@ -379,6 +379,9 @@ async function animateCrane(targetBall) {
   await wait(420);
   crane.classList.remove('lowering');
 
+  await wait(160);
+  floatingBall.classList.remove('carried');
+  floatingBall.classList.add('on-platform');
   revealSpot.innerHTML = '';
   revealSpot.appendChild(floatingBall);
 
