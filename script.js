@@ -197,7 +197,15 @@ const closeResultButton = document.getElementById('closeResult');
 const collectionList = document.getElementById('collectionList');
 const catCardTemplate = document.getElementById('catCardTemplate');
 
-const craneTrack = document.querySelector('.crane-track');
+const CRANE_BASE_CABLE = 120;
+const CRANE_MIN_CABLE = 120;
+const CRANE_MAX_CABLE = 360;
+const BALL_TOUCH_CLEARANCE = 4;
+const PLATFORM_TOUCH_OFFSET = 26;
+
+function clampCableLength(length) {
+  return Math.min(CRANE_MAX_CABLE, Math.max(CRANE_MIN_CABLE, length));
+}
 
 playButton.addEventListener('click', () => {
   if (!state.busy) {
@@ -343,7 +351,6 @@ async function animateCrane(targetBall) {
   const machineRect = machine.getBoundingClientRect();
   const ballRect = targetBall.getBoundingClientRect();
   const craneRect = crane.getBoundingClientRect();
-  const trackRect = craneTrack.getBoundingClientRect();
   const revealRect = revealSpot.getBoundingClientRect();
 
   const targetX = ballRect.left - machineRect.left + ballRect.width / 2 - craneRect.width / 2;
@@ -351,7 +358,11 @@ async function animateCrane(targetBall) {
   await wait(820);
 
   crane.classList.add('lowering');
-  const dropLength = Math.min(280, Math.max(140, ballRect.top - trackRect.top + 40));
+  const updatedBallRect = targetBall.getBoundingClientRect();
+  const clawRestRect = craneClaw.getBoundingClientRect();
+  const ballTouchPoint = updatedBallRect.bottom - BALL_TOUCH_CLEARANCE;
+  const dropDelta = ballTouchPoint - clawRestRect.bottom;
+  const dropLength = clampCableLength(CRANE_BASE_CABLE + dropDelta);
   crane.style.setProperty('--cable-length', `${dropLength}px`);
   await wait(520);
 
@@ -360,7 +371,7 @@ async function animateCrane(targetBall) {
   targetBall.classList.add('taken');
 
   const floatingBall = targetBall.cloneNode(true);
-  floatingBall.classList.add('floating-ball');
+  floatingBall.classList.add('floating-ball', 'carried');
   const computedColor = getComputedStyle(targetBall).getPropertyValue('--ball-color').trim();
   const fallbackColor = rarities[targetBall.dataset.rarity]?.color || '#ff8ad6';
   floatingBall.style.setProperty('--ball-color', computedColor || fallbackColor);
@@ -374,18 +385,23 @@ async function animateCrane(targetBall) {
   await wait(720);
 
   crane.classList.add('lowering');
-  const revealDrop = Math.min(260, Math.max(150, revealRect.top - trackRect.top + 60));
+  const clawRestAtReveal = craneClaw.getBoundingClientRect();
+  const platformTarget = revealRect.top + PLATFORM_TOUCH_OFFSET;
+  const revealDrop = clampCableLength(CRANE_BASE_CABLE + (platformTarget - clawRestAtReveal.bottom));
   crane.style.setProperty('--cable-length', `${revealDrop}px`);
   await wait(420);
   crane.classList.remove('lowering');
 
+  await wait(160);
+  floatingBall.classList.remove('carried');
+  floatingBall.classList.add('on-platform');
   revealSpot.innerHTML = '';
   revealSpot.appendChild(floatingBall);
 
   return floatingBall;
 }
 
-function revealCat(cat) {
+function showCatDetails(cat) {
   const rarity = rarities[cat.rarity];
   const cardFragment = catCardTemplate.content.cloneNode(true);
   const cardInner = cardFragment.querySelector('.cat-card-inner');
@@ -424,6 +440,10 @@ function revealCat(cat) {
   if (closeResultButton) {
     closeResultButton.focus({ preventScroll: true });
   }
+}
+
+function revealCat(cat) {
+  showCatDetails(cat);
   updateCollection(cat);
   updateCollectionList();
 }
@@ -453,15 +473,19 @@ function updateCollectionList() {
 
   sorted.forEach(({ cat, count }) => {
     const item = document.createElement('li');
-    const nameSpan = document.createElement('span');
-    nameSpan.className = 'cat-name';
-    nameSpan.textContent = `${cat.name}`;
+    const nameButton = document.createElement('button');
+    nameButton.type = 'button';
+    nameButton.className = 'cat-name';
+    nameButton.textContent = `${cat.name}`;
+    nameButton.addEventListener('click', () => {
+      showCatDetails(cat);
+    });
 
     const badge = document.createElement('span');
     badge.className = `rarity-tag ${cat.rarity}`;
     badge.textContent = `${rarities[cat.rarity].label} ×${count}`;
 
-    item.append(nameSpan, badge);
+    item.append(nameButton, badge);
     collectionList.appendChild(item);
   });
 }
