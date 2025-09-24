@@ -86,6 +86,101 @@ const catPool = [
     }
   },
   {
+    id: 'sprout',
+    name: 'Sprout',
+    rarity: 'common',
+    weight: 3,
+    description: 'A garden guide who taps seedlings awake with gentle paw boops.',
+    traits: {
+      'Favorite Treat': 'Sugar snap crisps',
+      Mood: 'Cheery'
+    },
+    colors: {
+      base: '#eefae6',
+      secondary: '#a6d97a',
+      innerEar: '#ddf2cf',
+      accent: '#f6fff1',
+      patternColor: '#8ccf60',
+      patternOpacity: 0.18
+    }
+  },
+  {
+    id: 'biscotti',
+    name: 'Biscotti',
+    rarity: 'common',
+    weight: 4,
+    description: 'Stacks cookie crumbs into cozy forts for midday lounging.',
+    traits: {
+      'Favorite Treat': 'Honey-dipped biscotti',
+      Mood: 'Content'
+    },
+    colors: {
+      base: '#fff1de',
+      secondary: '#e8b277',
+      innerEar: '#ffe0bd',
+      accent: '#fff7ed',
+      patternColor: '#d89757',
+      patternOpacity: 0.2
+    }
+  },
+  {
+    id: 'daybreak',
+    name: 'Daybreak',
+    rarity: 'common',
+    weight: 3,
+    description: 'Chases sunbeams across breakfast tables ringing tiny bell charms.',
+    traits: {
+      'Favorite Treat': 'Orange marmalade toast',
+      Mood: 'Sunny'
+    },
+    colors: {
+      base: '#fff6e1',
+      secondary: '#ffce7a',
+      innerEar: '#ffe7b6',
+      accent: '#fffbf2',
+      patternColor: '#ffb350',
+      patternOpacity: 0.22
+    }
+  },
+  {
+    id: 'sprinkle',
+    name: 'Sprinkle',
+    rarity: 'common',
+    weight: 4,
+    description: 'Decorates every cupcake in reach with dazzling whisk flicks.',
+    traits: {
+      'Favorite Treat': 'Vanilla bean frosting',
+      Mood: 'Festive'
+    },
+    colors: {
+      base: '#fff2fb',
+      secondary: '#f7a4d8',
+      innerEar: '#ffd2ec',
+      accent: '#fff9fd',
+      patternColor: '#f378be',
+      patternOpacity: 0.24
+    }
+  },
+  {
+    id: 'pebble',
+    name: 'Pebble',
+    rarity: 'common',
+    weight: 3,
+    description: 'Collects smooth river stones to build miniature throne rooms.',
+    traits: {
+      'Favorite Treat': 'Sesame crunch sticks',
+      Mood: 'Patient'
+    },
+    colors: {
+      base: '#f1f5f6',
+      secondary: '#a8c0c7',
+      innerEar: '#dde7ea',
+      accent: '#f8fbfc',
+      patternColor: '#8ba5ac',
+      patternOpacity: 0.2
+    }
+  },
+  {
     id: 'nimbus',
     name: 'Nimbus',
     rarity: 'rare',
@@ -121,6 +216,82 @@ const catPool = [
       accent: '#fffaf1',
       patternColor: 'linear-gradient(135deg, rgba(255,174,120,0.45), rgba(87,74,65,0.55))',
       patternOpacity: 0.28
+    }
+  },
+  {
+    id: 'glimmer',
+    name: 'Glimmer',
+    rarity: 'rare',
+    weight: 2,
+    description: 'Sprays trails of shimmer dust while rearranging arcade prize shelves.',
+    traits: {
+      'Favorite Treat': 'Lychee jelly cubes',
+      Mood: 'Dazzled'
+    },
+    colors: {
+      base: '#f2f3ff',
+      secondary: '#b2b6ff',
+      innerEar: '#e1e4ff',
+      accent: '#faf9ff',
+      patternColor: 'linear-gradient(135deg, rgba(178,182,255,0.5), rgba(132,139,255,0.55))',
+      patternOpacity: 0.26
+    }
+  },
+  {
+    id: 'tempo',
+    name: 'Tempo',
+    rarity: 'rare',
+    weight: 2,
+    description: 'Keeps the crane machine in rhythm with gentle metronome tail swishes.',
+    traits: {
+      'Favorite Treat': 'Cinnamon baton sticks',
+      Mood: 'Focused'
+    },
+    colors: {
+      base: '#f6f1ff',
+      secondary: '#c5a5ff',
+      innerEar: '#e6d7ff',
+      accent: '#fcf9ff',
+      patternColor: 'linear-gradient(135deg, rgba(197,165,255,0.52), rgba(148,118,229,0.48))',
+      patternOpacity: 0.24
+    }
+  },
+  {
+    id: 'tidal',
+    name: 'Tidal',
+    rarity: 'rare',
+    weight: 3,
+    description: 'Splashes arcade tokens into seashell stacks during closing time.',
+    traits: {
+      'Favorite Treat': 'Sea salt taffy',
+      Mood: 'Mellow'
+    },
+    colors: {
+      base: '#e8f8ff',
+      secondary: '#7fc4e6',
+      innerEar: '#d2edfa',
+      accent: '#f3fbff',
+      patternColor: 'linear-gradient(135deg, rgba(127,196,230,0.56), rgba(62,149,197,0.42))',
+      patternOpacity: 0.28
+    }
+  },
+  {
+    id: 'emberglow',
+    name: 'Emberglow',
+    rarity: 'rare',
+    weight: 2,
+    description: 'Warms chilly paws with mini bonfires built from cinnamon sticks.',
+    traits: {
+      'Favorite Treat': 'Toasted caramel puffs',
+      Mood: 'Cozy'
+    },
+    colors: {
+      base: '#fff0e9',
+      secondary: '#ff996f',
+      innerEar: '#ffd2c2',
+      accent: '#fff8f4',
+      patternColor: 'linear-gradient(135deg, rgba(255,153,111,0.52), rgba(217,101,67,0.48))',
+      patternOpacity: 0.26
     }
   },
   {
@@ -162,6 +333,63 @@ const catPool = [
     }
   },
   {
+    id: 'aurorielle',
+    name: 'Aurorielle',
+    rarity: 'epic',
+    weight: 1,
+    description: 'Twists ribbons of dawnlight into lanterns for late-night gamers.',
+    traits: {
+      'Favorite Treat': 'Candied grapefruit peel',
+      Mood: 'Radiant'
+    },
+    colors: {
+      base: '#fff0ff',
+      secondary: '#f4a5ff',
+      innerEar: '#ffd6ff',
+      accent: '#fff7ff',
+      patternColor: 'linear-gradient(135deg, rgba(244,165,255,0.58), rgba(200,105,245,0.46))',
+      patternOpacity: 0.3
+    }
+  },
+  {
+    id: 'mythos',
+    name: 'Mythos',
+    rarity: 'epic',
+    weight: 1,
+    description: 'Whispers enchanted stories that turn ticket stubs into keepsakes.',
+    traits: {
+      'Favorite Treat': 'Spiced fig tartlets',
+      Mood: 'Enigmatic'
+    },
+    colors: {
+      base: '#f2f4ff',
+      secondary: '#7f9fe6',
+      innerEar: '#d9e2ff',
+      accent: '#fafbff',
+      patternColor: 'linear-gradient(135deg, rgba(127,159,230,0.6), rgba(73,103,183,0.5))',
+      patternOpacity: 0.32
+    }
+  },
+  {
+    id: 'luminette',
+    name: 'Luminette',
+    rarity: 'epic',
+    weight: 1,
+    description: 'Bottles arcade glow into tiny jars to light secret pillow forts.',
+    traits: {
+      'Favorite Treat': 'Crystal sugar shards',
+      Mood: 'Whimsical'
+    },
+    colors: {
+      base: '#f7ffef',
+      secondary: '#b8f786',
+      innerEar: '#e4ffcb',
+      accent: '#fbfff6',
+      patternColor: 'linear-gradient(135deg, rgba(184,247,134,0.55), rgba(132,205,96,0.45))',
+      patternOpacity: 0.34
+    }
+  },
+  {
     id: 'queen-mallow',
     name: 'Queen Mallow',
     rarity: 'legendary',
@@ -178,6 +406,44 @@ const catPool = [
       accent: '#fff9ee',
       patternColor: 'linear-gradient(135deg, rgba(255,221,148,0.55), rgba(246,195,80,0.7))',
       patternOpacity: 0.34
+    }
+  },
+  {
+    id: 'starlace',
+    name: 'Starlace',
+    rarity: 'legendary',
+    weight: 1,
+    description: 'Weaves constellations into velvet capes for victorious claw champions.',
+    traits: {
+      'Favorite Treat': 'Meteor sugar cookies',
+      Mood: 'Regal'
+    },
+    colors: {
+      base: '#f4efff',
+      secondary: '#c6b0ff',
+      innerEar: '#e3d7ff',
+      accent: '#fbf8ff',
+      patternColor: 'linear-gradient(135deg, rgba(198,176,255,0.58), rgba(146,122,229,0.52))',
+      patternOpacity: 0.36
+    }
+  },
+  {
+    id: 'solstice',
+    name: 'Solstice',
+    rarity: 'legendary',
+    weight: 1,
+    description: 'Balances night and day by ringing the arcade bell at twilight.',
+    traits: {
+      'Favorite Treat': 'Sun-crystal pralines',
+      Mood: 'Serene'
+    },
+    colors: {
+      base: '#fff6ed',
+      secondary: '#ffbf6f',
+      innerEar: '#ffe1b8',
+      accent: '#fffbf5',
+      patternColor: 'linear-gradient(135deg, rgba(255,191,111,0.6), rgba(233,136,74,0.5))',
+      patternOpacity: 0.38
     }
   }
 ];
