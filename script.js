@@ -476,6 +476,7 @@ const catPool = [
 // -------------------- Global Game State --------------------
 const gameState = {
   busy: false,
+  attempts: 0,
   discovered: new Map()
 };
 
@@ -491,6 +492,22 @@ const catCardContainer = document.getElementById('catCard');
 const closeResultButton = document.getElementById('closeResult');
 const collectionListElement = document.getElementById('collectionList');
 const catCardTemplate = document.getElementById('catCardTemplate');
+const attemptCounterElement = document.getElementById('attemptCounter');
+const attemptValueElement = attemptCounterElement?.querySelector('.attempt-value');
+const rarityLegendElements = new Map(
+  [...document.querySelectorAll('.rarity-legend .rarity[data-rarity]')].map((item) => {
+    const rarityKey = item.dataset.rarity;
+    return [
+      rarityKey,
+      {
+        element: item,
+        meter: item.querySelector('.rarity-progress'),
+        fill: item.querySelector('.rarity-progress-fill'),
+        completion: item.querySelector('.rarity-completion')
+      }
+    ];
+  })
+);
 
 // -------------------- Gameplay Constants --------------------
 const CRANE_BASE_CABLE = 120;
@@ -592,6 +609,7 @@ function delay(ms) {
 async function runClawRound() {
   gameState.busy = true;
   playButton.disabled = true;
+  incrementAttemptCounter();
 
   const cat = drawCapsuleCat();
   const ball = locateBallForRarity(cat.rarity);
@@ -733,12 +751,17 @@ function presentCat(cat) {
   renderCatDetails(cat);
   recordCatDiscovery(cat);
   renderCollectionList();
+  renderRarityCompletion();
 }
 
 function recordCatDiscovery(cat) {
-  const current = gameState.discovered.get(cat.id) ?? { cat, count: 0 };
-  current.count += 1;
-  gameState.discovered.set(cat.id, current);
+  const current = gameState.discovered.get(cat.id);
+  if (current) {
+    current.count += 1;
+    return false;
+  }
+  gameState.discovered.set(cat.id, { cat, count: 1 });
+  return true;
 }
 
 function renderCollectionList() {
@@ -781,6 +804,59 @@ function getRarityOrder(key) {
   return RARITY_SEQUENCE.indexOf(key);
 }
 
+function renderAttemptCounter() {
+  if (!attemptCounterElement || !attemptValueElement) {
+    return;
+  }
+  attemptValueElement.textContent = gameState.attempts.toString();
+  attemptCounterElement.classList.toggle('is-active', gameState.attempts > 0);
+}
+
+function incrementAttemptCounter() {
+  gameState.attempts += 1;
+  renderAttemptCounter();
+}
+
+function renderRarityCompletion() {
+  const uniqueCounts = new Map();
+  gameState.discovered.forEach(({ cat }) => {
+    const current = uniqueCounts.get(cat.rarity) ?? 0;
+    uniqueCounts.set(cat.rarity, current + 1);
+  });
+
+  rarityLegendElements.forEach(({ element, meter, fill, completion }, rarityKey) => {
+    const total = catsByRarity.get(rarityKey)?.length ?? 0;
+    const collected = uniqueCounts.get(rarityKey) ?? 0;
+    const rawPercent = total === 0 ? 0 : Math.round((collected / total) * 100);
+    const percent = total === 0 ? 0 : collected === total ? 100 : rawPercent;
+
+    if (fill) {
+      fill.style.width = `${percent}%`;
+    }
+
+    if (meter) {
+      meter.setAttribute('aria-valuenow', percent.toString());
+      const valueText =
+        total === 0
+          ? 'No cats available'
+          : `${percent}% complete, ${collected} of ${total} collected`;
+      meter.setAttribute('aria-valuetext', valueText);
+    }
+
+    if (completion) {
+      if (total === 0) {
+        completion.textContent = '—';
+      } else if (collected === total) {
+        completion.textContent = `100% collected (${collected}/${total})`;
+      } else {
+        completion.textContent = `${percent}% collected (${collected}/${total})`;
+      }
+    }
+
+    element.classList.toggle('complete', total > 0 && collected === total);
+  });
+}
+
 function hideResultPanel() {
   resultPanelElement.classList.add('hidden');
   if (playButton) {
@@ -798,6 +874,8 @@ function initializeBallPit() {
 function initializeGame() {
   initializeBallPit();
   renderCollectionList();
+  renderAttemptCounter();
+  renderRarityCompletion();
 }
 
 initializeGame();
