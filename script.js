@@ -1,8 +1,9 @@
+// -------------------- Capsule Rarity Definitions --------------------
 const rarities = {
   common: {
     key: 'common',
     label: 'Common',
-    weight: 60,
+    weight: 59,
     color: '#77d1f7'
   },
   rare: {
@@ -22,9 +23,16 @@ const rarities = {
     label: 'Legendary',
     weight: 3,
     color: '#f6c350'
+  },
+  deity: {
+    key: 'deity',
+    label: 'Deity',
+    weight: 1,
+    color: '#f3c8ff'
   }
 };
 
+// -------------------- Cat Capsule Catalog --------------------
 const catPool = [
   {
     id: 'mochi',
@@ -84,6 +92,101 @@ const catPool = [
     }
   },
   {
+    id: 'sprout',
+    name: 'Sprout',
+    rarity: 'common',
+    weight: 3,
+    description: 'A garden guide who taps seedlings awake with gentle paw boops.',
+    traits: {
+      'Favorite Treat': 'Sugar snap crisps',
+      Mood: 'Cheery'
+    },
+    colors: {
+      base: '#eefae6',
+      secondary: '#a6d97a',
+      innerEar: '#ddf2cf',
+      accent: '#f6fff1',
+      patternColor: '#8ccf60',
+      patternOpacity: 0.18
+    }
+  },
+  {
+    id: 'biscotti',
+    name: 'Biscotti',
+    rarity: 'common',
+    weight: 4,
+    description: 'Stacks cookie crumbs into cozy forts for midday lounging.',
+    traits: {
+      'Favorite Treat': 'Honey-dipped biscotti',
+      Mood: 'Content'
+    },
+    colors: {
+      base: '#fff1de',
+      secondary: '#e8b277',
+      innerEar: '#ffe0bd',
+      accent: '#fff7ed',
+      patternColor: '#d89757',
+      patternOpacity: 0.2
+    }
+  },
+  {
+    id: 'daybreak',
+    name: 'Daybreak',
+    rarity: 'common',
+    weight: 3,
+    description: 'Chases sunbeams across breakfast tables ringing tiny bell charms.',
+    traits: {
+      'Favorite Treat': 'Orange marmalade toast',
+      Mood: 'Sunny'
+    },
+    colors: {
+      base: '#fff6e1',
+      secondary: '#ffce7a',
+      innerEar: '#ffe7b6',
+      accent: '#fffbf2',
+      patternColor: '#ffb350',
+      patternOpacity: 0.22
+    }
+  },
+  {
+    id: 'sprinkle',
+    name: 'Sprinkle',
+    rarity: 'common',
+    weight: 4,
+    description: 'Decorates every cupcake in reach with dazzling whisk flicks.',
+    traits: {
+      'Favorite Treat': 'Vanilla bean frosting',
+      Mood: 'Festive'
+    },
+    colors: {
+      base: '#fff2fb',
+      secondary: '#f7a4d8',
+      innerEar: '#ffd2ec',
+      accent: '#fff9fd',
+      patternColor: '#f378be',
+      patternOpacity: 0.24
+    }
+  },
+  {
+    id: 'pebble',
+    name: 'Pebble',
+    rarity: 'common',
+    weight: 3,
+    description: 'Collects smooth river stones to build miniature throne rooms.',
+    traits: {
+      'Favorite Treat': 'Sesame crunch sticks',
+      Mood: 'Patient'
+    },
+    colors: {
+      base: '#f1f5f6',
+      secondary: '#a8c0c7',
+      innerEar: '#dde7ea',
+      accent: '#f8fbfc',
+      patternColor: '#8ba5ac',
+      patternOpacity: 0.2
+    }
+  },
+  {
     id: 'nimbus',
     name: 'Nimbus',
     rarity: 'rare',
@@ -119,6 +222,82 @@ const catPool = [
       accent: '#fffaf1',
       patternColor: 'linear-gradient(135deg, rgba(255,174,120,0.45), rgba(87,74,65,0.55))',
       patternOpacity: 0.28
+    }
+  },
+  {
+    id: 'glimmer',
+    name: 'Glimmer',
+    rarity: 'rare',
+    weight: 2,
+    description: 'Sprays trails of shimmer dust while rearranging arcade prize shelves.',
+    traits: {
+      'Favorite Treat': 'Lychee jelly cubes',
+      Mood: 'Dazzled'
+    },
+    colors: {
+      base: '#f2f3ff',
+      secondary: '#b2b6ff',
+      innerEar: '#e1e4ff',
+      accent: '#faf9ff',
+      patternColor: 'linear-gradient(135deg, rgba(178,182,255,0.5), rgba(132,139,255,0.55))',
+      patternOpacity: 0.26
+    }
+  },
+  {
+    id: 'tempo',
+    name: 'Tempo',
+    rarity: 'rare',
+    weight: 2,
+    description: 'Keeps the crane machine in rhythm with gentle metronome tail swishes.',
+    traits: {
+      'Favorite Treat': 'Cinnamon baton sticks',
+      Mood: 'Focused'
+    },
+    colors: {
+      base: '#f6f1ff',
+      secondary: '#c5a5ff',
+      innerEar: '#e6d7ff',
+      accent: '#fcf9ff',
+      patternColor: 'linear-gradient(135deg, rgba(197,165,255,0.52), rgba(148,118,229,0.48))',
+      patternOpacity: 0.24
+    }
+  },
+  {
+    id: 'tidal',
+    name: 'Tidal',
+    rarity: 'rare',
+    weight: 3,
+    description: 'Splashes arcade tokens into seashell stacks during closing time.',
+    traits: {
+      'Favorite Treat': 'Sea salt taffy',
+      Mood: 'Mellow'
+    },
+    colors: {
+      base: '#e8f8ff',
+      secondary: '#7fc4e6',
+      innerEar: '#d2edfa',
+      accent: '#f3fbff',
+      patternColor: 'linear-gradient(135deg, rgba(127,196,230,0.56), rgba(62,149,197,0.42))',
+      patternOpacity: 0.28
+    }
+  },
+  {
+    id: 'emberglow',
+    name: 'Emberglow',
+    rarity: 'rare',
+    weight: 2,
+    description: 'Warms chilly paws with mini bonfires built from cinnamon sticks.',
+    traits: {
+      'Favorite Treat': 'Toasted caramel puffs',
+      Mood: 'Cozy'
+    },
+    colors: {
+      base: '#fff0e9',
+      secondary: '#ff996f',
+      innerEar: '#ffd2c2',
+      accent: '#fff8f4',
+      patternColor: 'linear-gradient(135deg, rgba(255,153,111,0.52), rgba(217,101,67,0.48))',
+      patternOpacity: 0.26
     }
   },
   {
@@ -160,6 +339,63 @@ const catPool = [
     }
   },
   {
+    id: 'aurorielle',
+    name: 'Aurorielle',
+    rarity: 'epic',
+    weight: 1,
+    description: 'Twists ribbons of dawnlight into lanterns for late-night gamers.',
+    traits: {
+      'Favorite Treat': 'Candied grapefruit peel',
+      Mood: 'Radiant'
+    },
+    colors: {
+      base: '#fff0ff',
+      secondary: '#f4a5ff',
+      innerEar: '#ffd6ff',
+      accent: '#fff7ff',
+      patternColor: 'linear-gradient(135deg, rgba(244,165,255,0.58), rgba(200,105,245,0.46))',
+      patternOpacity: 0.3
+    }
+  },
+  {
+    id: 'mythos',
+    name: 'Mythos',
+    rarity: 'epic',
+    weight: 1,
+    description: 'Whispers enchanted stories that turn ticket stubs into keepsakes.',
+    traits: {
+      'Favorite Treat': 'Spiced fig tartlets',
+      Mood: 'Enigmatic'
+    },
+    colors: {
+      base: '#f2f4ff',
+      secondary: '#7f9fe6',
+      innerEar: '#d9e2ff',
+      accent: '#fafbff',
+      patternColor: 'linear-gradient(135deg, rgba(127,159,230,0.6), rgba(73,103,183,0.5))',
+      patternOpacity: 0.32
+    }
+  },
+  {
+    id: 'luminette',
+    name: 'Luminette',
+    rarity: 'epic',
+    weight: 1,
+    description: 'Bottles arcade glow into tiny jars to light secret pillow forts.',
+    traits: {
+      'Favorite Treat': 'Crystal sugar shards',
+      Mood: 'Whimsical'
+    },
+    colors: {
+      base: '#f7ffef',
+      secondary: '#b8f786',
+      innerEar: '#e4ffcb',
+      accent: '#fbfff6',
+      patternColor: 'linear-gradient(135deg, rgba(184,247,134,0.55), rgba(132,205,96,0.45))',
+      patternOpacity: 0.34
+    }
+  },
+  {
     id: 'queen-mallow',
     name: 'Queen Mallow',
     rarity: 'legendary',
@@ -177,112 +413,184 @@ const catPool = [
       patternColor: 'linear-gradient(135deg, rgba(255,221,148,0.55), rgba(246,195,80,0.7))',
       patternOpacity: 0.34
     }
+  },
+  {
+    id: 'starlace',
+    name: 'Starlace',
+    rarity: 'legendary',
+    weight: 1,
+    description: 'Weaves constellations into velvet capes for victorious claw champions.',
+    traits: {
+      'Favorite Treat': 'Meteor sugar cookies',
+      Mood: 'Regal'
+    },
+    colors: {
+      base: '#f4efff',
+      secondary: '#c6b0ff',
+      innerEar: '#e3d7ff',
+      accent: '#fbf8ff',
+      patternColor: 'linear-gradient(135deg, rgba(198,176,255,0.58), rgba(146,122,229,0.52))',
+      patternOpacity: 0.36
+    }
+  },
+  {
+    id: 'solstice',
+    name: 'Solstice',
+    rarity: 'legendary',
+    weight: 1,
+    description: 'Balances night and day by ringing the arcade bell at twilight.',
+    traits: {
+      'Favorite Treat': 'Sun-crystal pralines',
+      Mood: 'Serene'
+    },
+    colors: {
+      base: '#fff6ed',
+      secondary: '#ffbf6f',
+      innerEar: '#ffe1b8',
+      accent: '#fffbf5',
+      patternColor: 'linear-gradient(135deg, rgba(255,191,111,0.6), rgba(233,136,74,0.5))',
+      patternOpacity: 0.38
+    }
+  },
+  {
+    id: 'aurora-muse',
+    name: 'Aurora Muse',
+    rarity: 'deity',
+    weight: 1,
+    description: 'A cosmic storyteller whose tail paints shimmering auroras across the arcade ceiling.',
+    traits: {
+      'Favorite Treat': 'Sunrise sorbet',
+      Mood: 'Transcendent'
+    },
+    colors: {
+      base: '#fef2ff',
+      secondary: '#f6c8ff',
+      innerEar: '#ffe4ff',
+      accent: '#ffffff',
+      patternColor: 'linear-gradient(140deg, rgba(255,200,237,0.6), rgba(160,220,255,0.6), rgba(255,246,189,0.65))',
+      patternOpacity: 0.4
+    }
   }
 ];
 
-const state = {
+// -------------------- Global Game State --------------------
+const gameState = {
   busy: false,
+  attempts: 0,
   discovered: new Map()
 };
 
-const machine = document.querySelector('.machine');
-const crane = document.getElementById('crane');
-const craneClaw = document.getElementById('craneClaw');
-const ballPit = document.getElementById('ballPit');
-const revealSpot = document.getElementById('revealSpot');
+// -------------------- Cached DOM References --------------------
+const machineElement = document.querySelector('.machine');
+const craneElement = document.getElementById('crane');
+const craneClawElement = document.getElementById('craneClaw');
+const ballPitElement = document.getElementById('ballPit');
+const revealSpotElement = document.getElementById('revealSpot');
 const playButton = document.getElementById('playButton');
-const resultPanel = document.getElementById('resultPanel');
+const resultPanelElement = document.getElementById('resultPanel');
 const catCardContainer = document.getElementById('catCard');
 const closeResultButton = document.getElementById('closeResult');
-const collectionList = document.getElementById('collectionList');
+const collectionListElement = document.getElementById('collectionList');
 const catCardTemplate = document.getElementById('catCardTemplate');
+const attemptCounterElement = document.getElementById('attemptCounter');
+const attemptValueElement = attemptCounterElement?.querySelector('.attempt-value');
+const rarityLegendElements = new Map(
+  [...document.querySelectorAll('.rarity-legend .rarity[data-rarity]')].map((item) => {
+    const rarityKey = item.dataset.rarity;
+    return [
+      rarityKey,
+      {
+        element: item,
+        meter: item.querySelector('.rarity-progress'),
+        fill: item.querySelector('.rarity-progress-fill'),
+        completion: item.querySelector('.rarity-completion')
+      }
+    ];
+  })
+);
 
+// -------------------- Gameplay Constants --------------------
 const CRANE_BASE_CABLE = 120;
 const CRANE_MIN_CABLE = 120;
 const CRANE_MAX_CABLE = 360;
 const BALL_TOUCH_CLEARANCE = 4;
 const PLATFORM_TOUCH_OFFSET = 26;
+const BALL_COUNT = 12;
+const RARITY_SEQUENCE = ['common', 'rare', 'epic', 'legendary', 'deity'];
 
+// -------------------- Weighted Distribution Helpers --------------------
+function buildDistribution(items, weightAccessor) {
+  const distribution = [];
+  let cumulativeWeight = 0;
+  items.forEach((item) => {
+    const weight = weightAccessor(item);
+    cumulativeWeight += weight;
+    distribution.push({ item, cumulativeWeight });
+  });
+  return { distribution, totalWeight: cumulativeWeight };
+}
+
+const rarityEntries = Object.values(rarities);
+const rarityDistribution = buildDistribution(rarityEntries, (rarity) => rarity.weight);
+const catsByRarity = catPool.reduce((acc, cat) => {
+  const bucket = acc.get(cat.rarity) ?? [];
+  bucket.push(cat);
+  acc.set(cat.rarity, bucket);
+  return acc;
+}, new Map());
+const catDistributions = new Map(
+  [...catsByRarity.entries()].map(([rarityKey, cats]) => [
+    rarityKey,
+    buildDistribution(cats, (cat) => cat.weight ?? 1)
+  ])
+);
+
+// -------------------- Utility Functions --------------------
 function clampCableLength(length) {
   return Math.min(CRANE_MAX_CABLE, Math.max(CRANE_MIN_CABLE, length));
 }
 
-playButton.addEventListener('click', () => {
-  if (!state.busy) {
-    playRound();
+function selectFromDistribution({ distribution, totalWeight }) {
+  if (distribution.length === 0) {
+    return undefined;
   }
-});
-
-closeResultButton.addEventListener('click', () => {
-  hideResult();
-});
-
-resultPanel.addEventListener('click', (event) => {
-  if (event.target === resultPanel) {
-    hideResult();
-  }
-});
-
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && !resultPanel.classList.contains('hidden')) {
-    hideResult();
-  }
-});
-
-function hideResult() {
-  resultPanel.classList.add('hidden');
-  if (playButton) {
-    playButton.focus({ preventScroll: true });
-  }
+  const roll = Math.random() * totalWeight;
+  return distribution.find(({ cumulativeWeight }) => roll < cumulativeWeight)?.item ?? distribution[distribution.length - 1].item;
 }
 
-function weightedRarity() {
-  const entries = Object.values(rarities);
-  const total = entries.reduce((sum, rarity) => sum + rarity.weight, 0);
-  let roll = Math.random() * total;
-  for (const rarity of entries) {
-    roll -= rarity.weight;
-    if (roll <= 0) {
-      return rarity.key;
-    }
+function selectRarityByWeight() {
+  return selectFromDistribution(rarityDistribution).key;
+}
+
+function selectCatByWeight(rarityKey) {
+  const distribution = catDistributions.get(rarityKey);
+  if (!distribution) {
+    return undefined;
   }
-  return entries[entries.length - 1].key;
+  return selectFromDistribution(distribution);
 }
 
-function weightedCat(pool) {
-  const total = pool.reduce((sum, cat) => sum + (cat.weight ?? 1), 0);
-  let roll = Math.random() * total;
-  for (const cat of pool) {
-    roll -= (cat.weight ?? 1);
-    if (roll <= 0) {
-      return cat;
-    }
-  }
-  return pool[pool.length - 1];
+function drawCapsuleCat() {
+  const rarityKey = selectRarityByWeight();
+  return selectCatByWeight(rarityKey) ?? catPool[catPool.length - 1];
 }
 
-function drawCat() {
-  const rarityKey = weightedRarity();
-  const pool = catPool.filter((cat) => cat.rarity === rarityKey);
-  return weightedCat(pool);
-}
-
-function createBall() {
+function createBallElement() {
   const ball = document.createElement('div');
   ball.className = 'ball';
-  assignBallRarity(ball, weightedRarity());
-  randomizeBallPosition(ball);
-  ballPit.appendChild(ball);
+  applyBallRarity(ball, selectRarityByWeight());
+  randomizeBallPlacement(ball);
+  ballPitElement.appendChild(ball);
   return ball;
 }
 
-function assignBallRarity(ball, rarityKey) {
+function applyBallRarity(ball, rarityKey) {
   const rarity = rarities[rarityKey];
   ball.dataset.rarity = rarity.key;
   ball.style.setProperty('--ball-color', rarity.color);
 }
 
-function randomizeBallPosition(ball) {
+function randomizeBallPlacement(ball) {
   const left = 10 + Math.random() * 70;
   const top = 12 + Math.random() * 70;
   const scale = 0.85 + Math.random() * 0.2;
@@ -293,81 +601,75 @@ function randomizeBallPosition(ball) {
   ball.style.opacity = '';
 }
 
-function setupBalls() {
-  for (let i = 0; i < 12; i += 1) {
-    createBall();
-  }
-}
-
-function wait(ms) {
+function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function playRound() {
-  state.busy = true;
+// -------------------- Game Flow --------------------
+async function runClawRound() {
+  gameState.busy = true;
   playButton.disabled = true;
+  incrementAttemptCounter();
 
-  const cat = drawCat();
-  const ball = findBallForRarity(cat.rarity);
+  const cat = drawCapsuleCat();
+  const ball = locateBallForRarity(cat.rarity);
   ball.classList.add('cooldown');
 
-  const floatingBall = await animateCrane(ball);
+  const floatingBall = await animateCraneToBall(ball);
 
-  await wait(250);
+  await delay(250);
   floatingBall.classList.add('burst');
-  await wait(380);
+  await delay(380);
   floatingBall.remove();
-  revealSpot.innerHTML = '';
-  crane.style.setProperty('--cable-length', '120px');
+  revealSpotElement.innerHTML = '';
+  craneElement.style.setProperty('--cable-length', '120px');
 
-  revealCat(cat);
-  await wait(200);
+  presentCat(cat);
+  await delay(200);
 
   ball.classList.remove('cooldown');
-  assignBallRarity(ball, weightedRarity());
-  randomizeBallPosition(ball);
+  applyBallRarity(ball, selectRarityByWeight());
+  randomizeBallPlacement(ball);
 
-  crane.classList.remove('grabbing');
-  crane.classList.remove('lowering');
+  craneElement.classList.remove('grabbing');
+  craneElement.classList.remove('lowering');
 
-  state.busy = false;
+  gameState.busy = false;
   playButton.disabled = false;
 }
 
-function findBallForRarity(rarityKey) {
-  const candidates = [...ballPit.querySelectorAll('.ball')].filter(
-    (ball) => !ball.classList.contains('cooldown') && ball.dataset.rarity === rarityKey
-  );
-  if (candidates.length > 0) {
-    return candidates[Math.floor(Math.random() * candidates.length)];
+function locateBallForRarity(rarityKey) {
+  const availableBalls = [...ballPitElement.querySelectorAll('.ball:not(.cooldown)')];
+  const rarityMatches = availableBalls.filter((ball) => ball.dataset.rarity === rarityKey);
+  if (rarityMatches.length > 0) {
+    return rarityMatches[Math.floor(Math.random() * rarityMatches.length)];
   }
-  const available = [...ballPit.querySelectorAll('.ball')].filter(
-    (ball) => !ball.classList.contains('cooldown')
-  );
-  return available.length ? available[Math.floor(Math.random() * available.length)] : createBall();
+  return availableBalls.length
+    ? availableBalls[Math.floor(Math.random() * availableBalls.length)]
+    : createBallElement();
 }
 
-async function animateCrane(targetBall) {
-  const machineRect = machine.getBoundingClientRect();
+async function animateCraneToBall(targetBall) {
+  const machineRect = machineElement.getBoundingClientRect();
   const ballRect = targetBall.getBoundingClientRect();
-  const craneRect = crane.getBoundingClientRect();
-  const revealRect = revealSpot.getBoundingClientRect();
+  const craneRect = craneElement.getBoundingClientRect();
+  const revealRect = revealSpotElement.getBoundingClientRect();
 
   const targetX = ballRect.left - machineRect.left + ballRect.width / 2 - craneRect.width / 2;
-  crane.style.setProperty('--crane-x', `${targetX}px`);
-  await wait(820);
+  craneElement.style.setProperty('--crane-x', `${targetX}px`);
+  await delay(820);
 
-  crane.classList.add('lowering');
+  craneElement.classList.add('lowering');
   const updatedBallRect = targetBall.getBoundingClientRect();
-  const clawRestRect = craneClaw.getBoundingClientRect();
+  const clawRestRect = craneClawElement.getBoundingClientRect();
   const ballTouchPoint = updatedBallRect.bottom - BALL_TOUCH_CLEARANCE;
   const dropDelta = ballTouchPoint - clawRestRect.bottom;
   const dropLength = clampCableLength(CRANE_BASE_CABLE + dropDelta);
-  crane.style.setProperty('--cable-length', `${dropLength}px`);
-  await wait(520);
+  craneElement.style.setProperty('--cable-length', `${dropLength}px`);
+  await delay(520);
 
-  crane.classList.remove('lowering');
-  crane.classList.add('grabbing');
+  craneElement.classList.remove('lowering');
+  craneElement.classList.add('grabbing');
   targetBall.classList.add('taken');
 
   const floatingBall = targetBall.cloneNode(true);
@@ -375,33 +677,36 @@ async function animateCrane(targetBall) {
   const computedColor = getComputedStyle(targetBall).getPropertyValue('--ball-color').trim();
   const fallbackColor = rarities[targetBall.dataset.rarity]?.color || '#ff8ad6';
   floatingBall.style.setProperty('--ball-color', computedColor || fallbackColor);
-  craneClaw.appendChild(floatingBall);
+  craneClawElement.appendChild(floatingBall);
 
-  crane.style.setProperty('--cable-length', '120px');
-  await wait(520);
+  craneElement.style.setProperty('--cable-length', '120px');
+  await delay(520);
 
   const revealX = revealRect.left - machineRect.left + revealRect.width / 2 - craneRect.width / 2;
-  crane.style.setProperty('--crane-x', `${revealX}px`);
-  await wait(720);
+  craneElement.style.setProperty('--crane-x', `${revealX}px`);
+  await delay(720);
 
-  crane.classList.add('lowering');
-  const clawRestAtReveal = craneClaw.getBoundingClientRect();
+  craneElement.classList.add('lowering');
+  const clawRestAtReveal = craneClawElement.getBoundingClientRect();
   const platformTarget = revealRect.top + PLATFORM_TOUCH_OFFSET;
-  const revealDrop = clampCableLength(CRANE_BASE_CABLE + (platformTarget - clawRestAtReveal.bottom));
-  crane.style.setProperty('--cable-length', `${revealDrop}px`);
-  await wait(420);
-  crane.classList.remove('lowering');
+  const revealDrop = clampCableLength(
+    CRANE_BASE_CABLE + (platformTarget - clawRestAtReveal.bottom)
+  );
+  craneElement.style.setProperty('--cable-length', `${revealDrop}px`);
+  await delay(420);
+  craneElement.classList.remove('lowering');
 
-  await wait(160);
+  await delay(160);
   floatingBall.classList.remove('carried');
   floatingBall.classList.add('on-platform');
-  revealSpot.innerHTML = '';
-  revealSpot.appendChild(floatingBall);
+  revealSpotElement.innerHTML = '';
+  revealSpotElement.appendChild(floatingBall);
 
   return floatingBall;
 }
 
-function showCatDetails(cat) {
+// -------------------- UI Rendering --------------------
+function renderCatDetails(cat) {
   const rarity = rarities[cat.rarity];
   const cardFragment = catCardTemplate.content.cloneNode(true);
   const cardInner = cardFragment.querySelector('.cat-card-inner');
@@ -436,39 +741,44 @@ function showCatDetails(cat) {
   catCardContainer.innerHTML = '';
   catCardContainer.appendChild(cardFragment);
 
-  resultPanel.classList.remove('hidden');
+  resultPanelElement.classList.remove('hidden');
   if (closeResultButton) {
     closeResultButton.focus({ preventScroll: true });
   }
 }
 
-function revealCat(cat) {
-  showCatDetails(cat);
-  updateCollection(cat);
-  updateCollectionList();
+function presentCat(cat) {
+  renderCatDetails(cat);
+  recordCatDiscovery(cat);
+  renderCollectionList();
+  renderRarityCompletion();
 }
 
-function updateCollection(cat) {
-  const current = state.discovered.get(cat.id) ?? { cat, count: 0 };
-  current.count += 1;
-  state.discovered.set(cat.id, current);
+function recordCatDiscovery(cat) {
+  const current = gameState.discovered.get(cat.id);
+  if (current) {
+    current.count += 1;
+    return false;
+  }
+  gameState.discovered.set(cat.id, { cat, count: 1 });
+  return true;
 }
 
-function updateCollectionList() {
-  collectionList.innerHTML = '';
-  if (state.discovered.size === 0) {
+function renderCollectionList() {
+  collectionListElement.innerHTML = '';
+  if (gameState.discovered.size === 0) {
     const empty = document.createElement('li');
     empty.className = 'empty';
     empty.textContent = 'No capsules opened yet. Give the claw a try!';
-    collectionList.appendChild(empty);
+    collectionListElement.appendChild(empty);
     return;
   }
 
-  const sorted = [...state.discovered.values()].sort((a, b) => {
+  const sorted = [...gameState.discovered.values()].sort((a, b) => {
     if (a.cat.rarity === b.cat.rarity) {
       return a.cat.name.localeCompare(b.cat.name);
     }
-    return rarityOrder(a.cat.rarity) - rarityOrder(b.cat.rarity);
+    return getRarityOrder(a.cat.rarity) - getRarityOrder(b.cat.rarity);
   });
 
   sorted.forEach(({ cat, count }) => {
@@ -478,7 +788,7 @@ function updateCollectionList() {
     nameButton.className = 'cat-name';
     nameButton.textContent = `${cat.name}`;
     nameButton.addEventListener('click', () => {
-      showCatDetails(cat);
+      renderCatDetails(cat);
     });
 
     const badge = document.createElement('span');
@@ -486,21 +796,114 @@ function updateCollectionList() {
     badge.textContent = `${rarities[cat.rarity].label} ×${count}`;
 
     item.append(nameButton, badge);
-    collectionList.appendChild(item);
+    collectionListElement.appendChild(item);
   });
 }
 
-function rarityOrder(key) {
-  return ['common', 'rare', 'epic', 'legendary'].indexOf(key);
+function getRarityOrder(key) {
+  return RARITY_SEQUENCE.indexOf(key);
 }
 
-function init() {
-  setupBalls();
-  updateCollectionList();
+function renderAttemptCounter() {
+  if (!attemptCounterElement || !attemptValueElement) {
+    return;
+  }
+  attemptValueElement.textContent = gameState.attempts.toString();
+  attemptCounterElement.classList.toggle('is-active', gameState.attempts > 0);
 }
 
-init();
+function incrementAttemptCounter() {
+  gameState.attempts += 1;
+  renderAttemptCounter();
+}
 
+function renderRarityCompletion() {
+  const uniqueCounts = new Map();
+  gameState.discovered.forEach(({ cat }) => {
+    const current = uniqueCounts.get(cat.rarity) ?? 0;
+    uniqueCounts.set(cat.rarity, current + 1);
+  });
+
+  rarityLegendElements.forEach(({ element, meter, fill, completion }, rarityKey) => {
+    const total = catsByRarity.get(rarityKey)?.length ?? 0;
+    const collected = uniqueCounts.get(rarityKey) ?? 0;
+    const rawPercent = total === 0 ? 0 : Math.round((collected / total) * 100);
+    const percent = total === 0 ? 0 : collected === total ? 100 : rawPercent;
+
+    if (fill) {
+      fill.style.width = `${percent}%`;
+    }
+
+    if (meter) {
+      meter.setAttribute('aria-valuenow', percent.toString());
+      const valueText =
+        total === 0
+          ? 'No cats available'
+          : `${percent}% complete, ${collected} of ${total} collected`;
+      meter.setAttribute('aria-valuetext', valueText);
+    }
+
+    if (completion) {
+      if (total === 0) {
+        completion.textContent = '—';
+      } else if (collected === total) {
+        completion.textContent = `100% collected (${collected}/${total})`;
+      } else {
+        completion.textContent = `${percent}% collected (${collected}/${total})`;
+      }
+    }
+
+    element.classList.toggle('complete', total > 0 && collected === total);
+  });
+}
+
+function hideResultPanel() {
+  resultPanelElement.classList.add('hidden');
+  if (playButton) {
+    playButton.focus({ preventScroll: true });
+  }
+}
+
+// -------------------- Initialization --------------------
+function initializeBallPit() {
+  for (let i = 0; i < BALL_COUNT; i += 1) {
+    createBallElement();
+  }
+}
+
+function initializeGame() {
+  initializeBallPit();
+  renderCollectionList();
+  renderAttemptCounter();
+  renderRarityCompletion();
+}
+
+initializeGame();
+
+// -------------------- Event Wiring --------------------
+playButton.addEventListener('click', () => {
+  if (!gameState.busy) {
+    runClawRound();
+  }
+});
+
+closeResultButton.addEventListener('click', () => {
+  hideResultPanel();
+});
+
+resultPanelElement.addEventListener('click', (event) => {
+  if (event.target === resultPanelElement) {
+    hideResultPanel();
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !resultPanelElement.classList.contains('hidden')) {
+    hideResultPanel();
+  }
+});
+
+// -------------------- Service Worker Registration --------------------
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch((err) => {

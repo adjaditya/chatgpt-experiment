@@ -44,6 +44,10 @@
         </div>
         <div class="machine-base">
           <button id="playButton" class="play-button" type="button">Grab a Cat!</button>
+          <div id="attemptCounter" class="attempt-counter" aria-live="polite">
+            <span class="attempt-label">Claw attempts</span>
+            <span class="attempt-value">0</span>
+          </div>
           <p class="play-hint">Tap the button to send the claw. Each capsule reveals a different cat rarity!</p>
         </div>
       </div>
@@ -53,10 +57,66 @@
       <div class="rarity-legend">
         <h2>Rarity Legend</h2>
         <ul>
-          <li class="rarity common">Common <span>60%</span></li>
-          <li class="rarity rare">Rare <span>25%</span></li>
-          <li class="rarity epic">Epic <span>12%</span></li>
-          <li class="rarity legendary">Legendary <span>3%</span></li>
+          <li class="rarity common" data-rarity="common">
+            <div class="rarity-header">
+              <span class="rarity-name">Common</span>
+              <span class="rarity-odds">59% chance</span>
+            </div>
+            <div class="rarity-progress" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0% collected">
+              <div class="rarity-progress-track">
+                <div class="rarity-progress-fill"></div>
+              </div>
+              <span class="rarity-completion">0% collected</span>
+            </div>
+          </li>
+          <li class="rarity rare" data-rarity="rare">
+            <div class="rarity-header">
+              <span class="rarity-name">Rare</span>
+              <span class="rarity-odds">25% chance</span>
+            </div>
+            <div class="rarity-progress" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0% collected">
+              <div class="rarity-progress-track">
+                <div class="rarity-progress-fill"></div>
+              </div>
+              <span class="rarity-completion">0% collected</span>
+            </div>
+          </li>
+          <li class="rarity epic" data-rarity="epic">
+            <div class="rarity-header">
+              <span class="rarity-name">Epic</span>
+              <span class="rarity-odds">12% chance</span>
+            </div>
+            <div class="rarity-progress" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0% collected">
+              <div class="rarity-progress-track">
+                <div class="rarity-progress-fill"></div>
+              </div>
+              <span class="rarity-completion">0% collected</span>
+            </div>
+          </li>
+          <li class="rarity legendary" data-rarity="legendary">
+            <div class="rarity-header">
+              <span class="rarity-name">Legendary</span>
+              <span class="rarity-odds">3% chance</span>
+            </div>
+            <div class="rarity-progress" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0% collected">
+              <div class="rarity-progress-track">
+                <div class="rarity-progress-fill"></div>
+              </div>
+              <span class="rarity-completion">0% collected</span>
+            </div>
+          </li>
+          <li class="rarity deity" data-rarity="deity">
+            <div class="rarity-header">
+              <span class="rarity-name">Deity</span>
+              <span class="rarity-odds">1% chance</span>
+            </div>
+            <div class="rarity-progress" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0% collected">
+              <div class="rarity-progress-track">
+                <div class="rarity-progress-fill"></div>
+              </div>
+              <span class="rarity-completion">0% collected</span>
+            </div>
+          </li>
         </ul>
       </div>
       <div class="collection" aria-live="polite">
