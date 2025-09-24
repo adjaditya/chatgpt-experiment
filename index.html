@@ -3,34 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Website</title>
-  <meta name="description" content="A simple generic index.html template">
+  <title>Cat Claw Capsule - Cozy Gacha Crane</title>
+  <meta name="theme-color" content="#f9c5d1">
+  <meta name="description" content="Prototype of a cozy cat-themed crane gacha built as a progressive web app.">
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="styles.css">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 </head>
 <body>
-
-  <header>
-    <h1>Welcome to My Website</h1>
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
+  <header class="app-header">
+    <div class="logo">
+      <span class="logo-icon" aria-hidden="true">🐾</span>
+      <h1>Cat Claw Capsule</h1>
+    </div>
+    <p class="tagline">Win adorable cat friends from the cozy crane!</p>
   </header>
 
-  <main>
-    <section>
-      <h2>Main Content</h2>
-      <p>This is a generic starter page. Replace this text with your content.</p>
+  <main class="main-layout">
+    <section class="machine-section">
+      <div class="machine" aria-label="Cat claw crane machine">
+        <div class="machine-top">
+          <div class="crane-track">
+            <div class="crane" id="crane">
+              <div class="crane-head">
+                <div class="crane-face"></div>
+                <div class="crane-light"></div>
+              </div>
+              <div class="crane-cable" id="craneCable"></div>
+              <div class="crane-claw" id="craneClaw">
+                <div class="claw-arm left"></div>
+                <div class="claw-arm right"></div>
+                <div class="claw-grip"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="machine-window">
+          <div class="ball-pit" id="ballPit" aria-live="polite"></div>
+          <div class="reveal-platform" id="revealSpot"></div>
+        </div>
+        <div class="machine-base">
+          <button id="playButton" class="play-button" type="button">Grab a Cat!</button>
+          <p class="play-hint">Tap the button to send the claw. Each capsule reveals a different cat rarity!</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-panel" aria-label="Gacha details">
+      <div class="rarity-legend">
+        <h2>Rarity Legend</h2>
+        <ul>
+          <li class="rarity common">Common <span>60%</span></li>
+          <li class="rarity rare">Rare <span>25%</span></li>
+          <li class="rarity epic">Epic <span>12%</span></li>
+          <li class="rarity legendary">Legendary <span>3%</span></li>
+        </ul>
+      </div>
+      <div class="collection" aria-live="polite">
+        <h2>Discovered Cats</h2>
+        <p class="collection-hint">Collect them all! Each cat has a unique personality.</p>
+        <ul id="collectionList" class="collection-list"></ul>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 My Website. All rights reserved.</p>
-  </footer>
+  <aside class="result-panel hidden" id="resultPanel" aria-live="polite">
+    <div class="result-content">
+      <div id="resultBall" class="result-ball"></div>
+      <div id="catCard" class="cat-card"></div>
+      <button id="closeResult" class="close-result" type="button">Play again</button>
+    </div>
+  </aside>
 
-  <script src="script.js"></script>
+  <template id="catCardTemplate">
+    <div class="cat-card-inner">
+      <div class="cat-portrait">
+        <div class="cat-ear left"></div>
+        <div class="cat-ear right"></div>
+        <div class="cat-head">
+          <div class="cat-pattern"></div>
+          <div class="cat-eye left"></div>
+          <div class="cat-eye right"></div>
+          <div class="cat-cheek left"></div>
+          <div class="cat-cheek right"></div>
+          <div class="cat-mouth"></div>
+          <div class="cat-whisker left"></div>
+          <div class="cat-whisker right"></div>
+        </div>
+        <div class="cat-body">
+          <div class="cat-belly"></div>
+          <div class="cat-paw left"></div>
+          <div class="cat-paw right"></div>
+          <div class="cat-tail"></div>
+        </div>
+      </div>
+      <div class="cat-info">
+        <div class="rarity-pill"></div>
+        <h3></h3>
+        <p class="cat-description"></p>
+        <dl class="cat-traits"></dl>
+      </div>
+    </div>
+  </template>
+
+  <script src="script.js" type="module"></script>
 </body>
 </html>
